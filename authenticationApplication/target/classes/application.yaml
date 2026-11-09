@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: authenticationApplication
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    username: dbAdmin
+    password: system123#
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID:test-client-id}
+            client-secret: ${GOOGLE_CLIENT_SECRET:test-client-secret}
+            scope:
+              - email
+              - profile
+              - openid
+          github:
+            client-id: ${GITHUB_CLIENT_ID:test-github-clientId}
+            client-secret: ${GITHUB_CLIENT_SECRET:test-github-clientSecret}
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope:
+              - user:email
+              - read:user
+
+logging:
+  level:
+    sql: debug
+    org.springframework.security : debug
+    root: debug
+
+security:
+  jwt:
+    secret: ${JWT_SECRET:SaxCVwb/WvPksM0htd+Z8zMjOUiu7/nKaaNHYBmfyVhtiAPR5tEJUf6GEnr7ibJivEVawk7ElfxcAvlohCbuNQ==}
+    issuer: ${JWT_ISSUER:api.substring.com}
+    access-ttl-seconds: ${JWT_ACCESS_TTL_SECONDS:3600}
+    refresh-ttl-seconds: ${JWT_REFRESH_TTL_SECONDS:86400}
+    refresh-token-cookie-name: ${JWT_REFRESH_COOKIE_NAME:refreshToken}
+    cookie-secure: ${JWT_COOKIE_SECURE:true}
+    cookie-http-only: ${JWT_COOKIE_HTTP_ONLY:true}
+    cookie-same-site: ${JWT_COOKIE_SAME_SITE:lax}
+    cookie-domain: ${JWT_COOKIE_DOMAIN:127.0.0.1}
+
